@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">devices</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="_elements" view="colnames">
+<left>0</left>
+<top>0</top>
+<width>107</width>
+<height>150</height>
+<sql_create_table>CREATE TABLE `_elements` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) NOT NULL,
+  `Position` int(10) unsigned NOT NULL DEFAULT '0',
+  `OwnerEl` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'parent',
+  `Slave` binary(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC</sql_create_table>
+</table>
+<table name="access_level" view="colnames">
+<left>307</left>
+<top>733</top>
+<width>125</width>
+<height>235</height>
+<sql_create_table>CREATE TABLE `access_level` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ProgrammistId` int(11) DEFAULT NULL,
+  `ViewControlId` int(11) DEFAULT NULL,
+  `Add` enum('0','1') DEFAULT NULL,
+  `Edit` enum('0','1') DEFAULT NULL,
+  `Delete` enum('0','1') DEFAULT NULL,
+  `DateAdd` varchar(20) DEFAULT NULL,
+  `AddBy` int(11) DEFAULT NULL,
+  `DateChange` varchar(20) DEFAULT NULL,
+  `ChangedBy` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `FK_access_level` (`ViewControlId`),
+  KEY `FK_access_level1` (`ProgrammistId`),
+  CONSTRAINT `FK_access_level` FOREIGN KEY (`ViewControlId`) REFERENCES `view_control` (`id`),
+  CONSTRAINT `FK_access_level1` FOREIGN KEY (`ProgrammistId`) REFERENCES `programmists` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1 AVG_ROW_LENGTH=5461 COMMENT='InnoDB free: 11264 kB'</sql_create_table>
+</table>
+<table name="access_list" view="colnames">
+<left>222</left>
+<top>0</top>
+<width>104</width>
+<height>150</height>
+<sql_create_table>CREATE TABLE `access_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `IP` varchar(20) DEFAULT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  `Group` int(11) DEFAULT NULL COMMENT 'from spr_ip_group',
+  `Status` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1092 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="connections" view="colnames">
+<left>814</left>
+<top>742</top>
+<width>144</width>
+<height>133</height>
+<sql_create_table>CREATE TABLE `connections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `PodrazdelenieId` int(11) DEFAULT NULL COMMENT 'id from table spr_fililas',
+  `ConnectionTypeId` int(11) DEFAULT NULL COMMENT 'id from table connection_type',
+  `IpconfigId` int(11) DEFAULT NULL,
+  UNIQUE KEY `id` (`id`),
+  KEY `FK_connections123` (`IpconfigId`),
+  KEY `FK_connections` (`ConnectionTypeId`),
+  CONSTRAINT `FK_connections` FOREIGN KEY (`ConnectionTypeId`) REFERENCES `spr_connections_type` (`id_conn`),
+  CONSTRAINT `FK_connections123` FOREIGN KEY (`IpconfigId`) REFERENCES `ipconfig` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="device_upd_history" view="colnames">
+<left>480</left>
+<top>0</top>
+<width>111</width>
+<height>201</height>
+<sql_create_table>CREATE TABLE `device_upd_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `DeviceId` int(11) DEFAULT NULL,
+  `Description` text,
+  `Date` varchar(25) DEFAULT NULL,
+  `AddBy` int(11) DEFAULT NULL,
+  `DateAdd` varchar(25) DEFAULT NULL,
+  `ChangedBy` int(11) DEFAULT NULL,
+  `DateChange` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="devices" view="colnames">
+<left>596</left>
+<top>0</top>
+<width>133</width>
+<height>298</height>
+<sql_create_table>CREATE TABLE `devices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `DeviceName` varchar(70) DEFAULT NULL,
+  `PodrazdelenieId` int(11) DEFAULT NULL,
+  `DeviceType` int(11) DEFAULT NULL COMMENT 'id from spr_device',
+  `Model` int(11) DEFAULT NULL,
+  `SerialNumber` varchar(50) DEFAULT NULL,
+  `OsType` int(11) DEFAULT NULL COMMENT 'id from spr_os_system',
+  `Version` varchar(20) DEFAULT NULL,
+  `CertName` varchar(70) DEFAULT NULL,
+  `Operator` int(11) DEFAULT NULL COMMENT 'id from spr_operator',
+  `SimNumber` varchar(20) DEFAULT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  `DateAdd` varchar(20) DEFAULT NULL,
+  `AddBy` int(11) DEFAULT NULL,
+  `DateChange` varchar(20) DEFAULT NULL,
+  `ChangedBy` int(11) DEFAULT NULL,
+  `Login` text,
+  `Password` text,
+  `DataObtaining` varchar(20) DEFAULT NULL COMMENT 'Дата приобретения',
+  `DateExploitation` varchar(20) DEFAULT NULL COMMENT 'Дата эксплуатация',
+  `Purveyor` int(11) DEFAULT NULL COMMENT 'Поставщик',
+  `TermGuarantee` varchar(20) DEFAULT NULL COMMENT 'Гарантийный срок',
+  `Status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_device` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=518 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=8192 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="dns_name" view="colnames">
+<left>734</left>
+<top>0</top>
+<width>120</width>
+<height>150</height>
+<sql_create_table>CREATE TABLE `dns_name` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `DnsName` varchar(30) DEFAULT NULL,
+  `IpAdress` varchar(20) DEFAULT NULL,
+  `Podrazdelenie` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="ipconfig" view="colnames">
+<left>1010</left>
+<top>672</top>
+<width>153</width>
+<height>298</height>
+<sql_create_table>CREATE TABLE `ipconfig` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `DeviceId` int(11) DEFAULT NULL,
+  `ConnectionType` int(11) DEFAULT NULL,
+  `Ip` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Mask` int(11) DEFAULT '0',
+  `Gateway` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Dns1` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Dns2` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `CodeOperator` int(11) DEFAULT NULL,
+  `SimNumber` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Status` int(11) DEFAULT NULL,
+  `DateAdd` varchar(20) DEFAULT NULL,
+  `AddBy` int(11) DEFAULT NULL,
+  `DateChange` varchar(20) DEFAULT NULL,
+  `ChangedBy` int(11) DEFAULT NULL,
+  `Descriptions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `Provider` int(11) DEFAULT NULL,
+  `Tarif` int(11) DEFAULT NULL,
+  `Speed` varchar(55) DEFAULT NULL,
+  `Price` int(11) DEFAULT NULL,
+  `ContractNumber` varchar(55) DEFAULT NULL,
+  `ContractDate` varchar(20) DEFAULT NULL,
+  `ContractActionFrom` varchar(20) DEFAULT NULL,
+  `ContractActionTo` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=386 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=546 COMMENT='InnoDB free: 11264 kB'</sql_create_table>
+</table>
+<table name="log" view="colnames">
+<left>1017</left>
+<top>0</top>
+<width>106</width>
+<height>184</height>
+<sql_create_table>CREATE TABLE `log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Router` varchar(50) DEFAULT NULL,
+  `SoftVersion` varchar(20) DEFAULT NULL,
+  `Model` varchar(20) DEFAULT NULL,
+  `GetDate` varchar(20) DEFAULT NULL,
+  `Script` int(11) DEFAULT NULL COMMENT 'id from spr_scripts',
+  `Status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=585 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="oblast" view="colnames">
+<left>1128</left>
+<top>0</top>
+<width>73</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `oblast` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="podrazdelenie" view="colnames">
+<left>821</left>
+<top>913</top>
+<width>148</width>
+<height>293</height>
+<sql_create_table>CREATE TABLE `podrazdelenie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Code` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Name` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Adres` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `RegionId` int(11) DEFAULT NULL,
+  `ParentId` int(11) unsigned DEFAULT NULL,
+  `PodrazdelenieType` int(11) DEFAULT NULL,
+  `ProgrammistId` int(11) DEFAULT NULL,
+  `OblastId` int(11) DEFAULT NULL,
+  `Status` int(11) DEFAULT NULL,
+  `DateAdd` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `AddBy` int(11) DEFAULT NULL,
+  `DateChange` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `ChangedBy` int(11) DEFAULT NULL,
+  `Position` int(11) unsigned NOT NULL DEFAULT '0',
+  `Slave` int(11) NOT NULL DEFAULT '0',
+  `FormingDate` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `Latitude` varchar(15) COLLATE utf8_bin DEFAULT NULL COMMENT 'Широта',
+  `Longitude` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT 'Долгота',
+  UNIQUE KEY `id` (`id`),
+  KEY `FK_podrazdelenie1` (`ProgrammistId`),
+  CONSTRAINT `FK_podrazdelenie1` FOREIGN KEY (`ProgrammistId`) REFERENCES `programmists` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=220 COMMENT='InnoDB free: 3072 kB'</sql_create_table>
+</table>
+<table name="programmists" view="colnames">
+<left>502</left>
+<top>867</top>
+<width>135</width>
+<height>252</height>
+<sql_create_table>CREATE TABLE `programmists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Surname` varchar(40) DEFAULT NULL,
+  `Name` varchar(40) DEFAULT NULL,
+  `Patronymic` varchar(40) DEFAULT NULL,
+  `Operator` int(11) DEFAULT NULL,
+  `Tel` varchar(10) DEFAULT NULL,
+  `Email` varchar(25) DEFAULT NULL,
+  `Login` varchar(20) DEFAULT NULL,
+  `Password` text,
+  `Status` enum('admin','user') DEFAULT 'user',
+  `CommentAccess` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=528 COMMENT='InnoDB free: 11264 kB'</sql_create_table>
+</table>
+<table name="provider_problem" view="colnames">
+<left>140</left>
+<top>308</top>
+<width>132</width>
+<height>201</height>
+<sql_create_table>CREATE TABLE `provider_problem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `PodrazdelenieId` int(11) DEFAULT NULL,
+  `DeviceId` int(11) DEFAULT NULL,
+  `ProviderId` int(11) DEFAULT NULL,
+  `Reason` varchar(255) DEFAULT NULL,
+  `DateBegin` varchar(20) DEFAULT NULL,
+  `DateEnd` varchar(20) DEFAULT NULL,
+  `Image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="region" view="colnames">
+<left>2</left>
+<top>239</top>
+<width>89</width>
+<height>167</height>
+<sql_create_table>CREATE TABLE `region` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) DEFAULT NULL,
+  `ParentId` int(11) DEFAULT NULL,
+  `Slave` binary(1) NOT NULL DEFAULT '0',
+  `Position` int(10) unsigned NOT NULL DEFAULT '0',
+  `OwnerEl` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=486 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=77 COMMENT='InnoDB free: 11264 kB'</sql_create_table>
+</table>
+<table name="spr_conn_kind" view="colnames">
+<left>281</left>
+<top>303</top>
+<width>135</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_conn_kind` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Kind` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  UNIQUE KEY `id_conn` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_connections_type" view="colnames">
+<left>575</left>
+<top>732</top>
+<width>145</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_connections_type` (
+  `id_conn` int(11) NOT NULL AUTO_INCREMENT,
+  `Connection` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Kind` int(11) NOT NULL,
+  UNIQUE KEY `id_conn` (`id_conn`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_devices" view="colnames">
+<left>550</left>
+<top>308</top>
+<width>107</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_devices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `DeviceType` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_ip_group" view="colnames">
+<left>662</left>
+<top>308</top>
+<width>104</width>
+<height>133</height>
+<sql_create_table>CREATE TABLE `spr_ip_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(20) DEFAULT NULL,
+  `Description` varchar(30) DEFAULT NULL,
+  `Status` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=3276 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_localities" view="colnames">
+<left>771</left>
+<top>308</top>
+<width>100</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_localities` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `NameRuss` varchar(40) DEFAULT NULL,
+  `NameTaj` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_mask" view="colnames">
+<left>876</left>
+<top>308</top>
+<width>69</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_mask` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Sidr` varchar(10) DEFAULT NULL,
+  `Mask` varchar(16) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_model_device" view="colnames">
+<left>950</left>
+<top>308</top>
+<width>79</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_model_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Model` varchar(50) DEFAULT NULL,
+  `Device` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_operator" view="colnames">
+<left>1034</left>
+<top>308</top>
+<width>121</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_operator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `CodeOperator` varchar(20) DEFAULT NULL,
+  `Nazvanie` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_os" view="colnames">
+<left>1160</left>
+<top>308</top>
+<width>55</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_os` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Os` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_place_device" view="colnames">
+<left>1220</left>
+<top>308</top>
+<width>106</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_place_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `PlaceStatus` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_podrazdelenie_status" view="colnames">
+<left>160</left>
+<top>490</top>
+<width>156</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_podrazdelenie_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `PodrazdelenieStatus` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_podrazdelenie_type" view="colnames">
+<left>561</left>
+<top>449</top>
+<width>98</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_podrazdelenie_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_providers" view="colnames">
+<left>314</left>
+<top>492</top>
+<width>88</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_providers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Provider` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  UNIQUE KEY `id_conn` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_purveyors" view="colnames">
+<left>457</left>
+<top>451</top>
+<width>104</width>
+<height>201</height>
+<sql_create_table>CREATE TABLE `spr_purveyors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Purveyor` varchar(20) DEFAULT NULL,
+  `Site` varchar(20) DEFAULT NULL,
+  `Surname` varchar(20) DEFAULT NULL,
+  `Name` varchar(20) DEFAULT NULL,
+  `Patronymic` varchar(20) DEFAULT NULL,
+  `Operator` int(11) DEFAULT NULL,
+  `Tel` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_router_status" view="colnames">
+<left>660</left>
+<top>450</top>
+<width>114</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_router_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `RouterStatus` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_rule_status" view="colnames">
+<left>792</left>
+<top>560</top>
+<width>101</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_rule_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `RuleStatus` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_script_status" view="colnames">
+<left>1259</left>
+<top>461</top>
+<width>109</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_script_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ScriptStatus` varchar(20) DEFAULT NULL,
+  `StatusId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_scripts" view="colnames">
+<left>1104</left>
+<top>449</top>
+<width>147</width>
+<height>144</height>
+<sql_create_table>CREATE TABLE `spr_scripts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ScriptIdentification` int(11) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 5120 kB'</sql_create_table>
+</table>
+<table name="spr_status" view="colnames">
+<left>996</left>
+<top>457</top>
+<width>109</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `spr_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `StatusName` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="spr_tarif" view="colnames">
+<left>907</left>
+<top>464</top>
+<width>88</width>
+<height>116</height>
+<sql_create_table>CREATE TABLE `spr_tarif` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Tarif` varchar(60) DEFAULT NULL,
+  `Provider` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="view_control" view="colnames">
+<left>164</left>
+<top>717</top>
+<width>104</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `view_control` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Description` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
