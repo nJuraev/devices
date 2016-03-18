@@ -28,6 +28,17 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        Yii::$container->set('yii\grid\GridView', [
+            'tableOptions' => [
+                'class' => 'table table-striped table-bordered mygridstyle',
+            ],
+            'headerRowOptions' => [
+                'class'=>'gridheader'
+            ],
+            'filterRowOptions'=>[
+                'class'=>'filters inputstyle'
+            ]
+        ]),
        'urlManager' => [
 
             'enablePrettyUrl' => true,

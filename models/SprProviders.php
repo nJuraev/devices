@@ -26,7 +26,8 @@ class SprProviders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Provider'], 'string', 'max' => 50]
+            [['Provider'], 'string', 'max' => 50],
+            [['Provider'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -37,7 +38,12 @@ class SprProviders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Provider' => 'Provider',
+            'Provider' => 'Провайдер',
         ];
+    }
+
+    function getTarif()
+    {
+        return $this->hasMany(SprTarif::className(),['Provider'=>'id']);
     }
 }

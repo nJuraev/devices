@@ -26,7 +26,8 @@ class SprPodrazdelenieStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PodrazdelenieStatus'], 'string', 'max' => 100]
+            [['PodrazdelenieStatus'], 'string', 'max' => 100],
+            [['PodrazdelenieStatus'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -37,7 +38,7 @@ class SprPodrazdelenieStatus extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'PodrazdelenieStatus' => 'Podrazdelenie Status',
+            'PodrazdelenieStatus' => 'Статус подразделения',
         ];
     }
 }

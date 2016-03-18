@@ -110,12 +110,45 @@ a.desc:after {
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
-    margin-top: 0.4px;
+    #margin-top: 0.4px;
     color: #fff;
     background: url(img/active.gif) repeat-x;;
 
 }
 
+.mygridstyle{
+    font-size: 12px;
+
+}
+.mygridstyle > tbody > tr > td{
+    padding: 4px;
+}
+.mygridstyle > thead > tr > td{
+    padding: 5px;
+}
+.mygridstyle > tbody > tr:hover{
+    background-color: #e6fff1;
+}
+
+.inputstyle > td > input, .inputstyle > td > select {
+    width: auto;
+    height: 25px;
+    padding: 2px;
+
+}
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+.gridheader{
+    background: url(img/4.png) repeat-x;;
+    color:white;
+}
+.gridheader > th > a{
+    color:#dbe3ff;
+
+}
+.gridheader > th > a:hover{
+    color:white;
+}
+
+

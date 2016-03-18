@@ -3,11 +3,12 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
+use app\assets\AppAsset;
+use yii\bootstrap\Modal;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
 
 AppAsset::register($this);
 ?>
@@ -51,23 +52,23 @@ AppAsset::register($this);
             ['label' => 'Справочники',
             'items'=>[
                 ['label'=>'Программисты','url'=>['programmists/admin']],
-                ['label'=>'Тип подключения','url'=>['spr-connection-type/admin']],
+                ['label'=>'Тип подключения','url'=>['spr-connections-type/admin']],
                 ['label'=>'Интернет-провайдеры','url'=>['spr-providers/admin']],
                 ['label'=>'Тип подразделения','url'=>['spr-podrazdelenie-type/admin']],
-                ['label'=>'Статус','url'=>['sprstatus/admin']],
-                ['label'=>'Статус роутера','url'=>['sprrouterstatus/admin']],
+                ['label'=>'Статус','url'=>['spr-status/admin']],
+                ['label'=>'Статус роутера','url'=>['spr-router-status/admin']],
                 ['label'=>'Статус подразделения','url'=>['spr-podrazdelenie-status/admin']],
                 ['label'=>'Статус скрипты','url'=>['spr-script-status/admin']],
                 ['label'=>'Сотовые операторы','url'=>['spr-operator/admin']],
                 ['label'=>'Модель устройства','url'=>['spr-model-device/admin']],
-                ['label'=>'IP Group','url'=>['spripgroup/admin']],
+                ['label'=>'IP Group','url'=>['spr-ip-group/admin']],
                 ['label'=>'Тип устройства','url'=>['spr-devices/admin']],
                 ['label'=>'Тип ОС','url'=>['spr-os/admin']],
                 ['label'=>'Скрипты','url'=>['spr-scripts/admin']],
                 ['label'=>'Ассess List','url'=>['access-list/admin']],
-                ['label'=>'DNS','url'=>['dns/admin']],
+                ['label'=>'DNS','url'=>['dns-name/admin']],
                 ['label'=>'Поставщики','url'=>['spr-purveyors/admin']],
-                ['label'=>'Тарифы','url'=>['spr-tafif/admin']],
+                ['label'=>'Тарифы','url'=>['spr-tarif/admin']],
             ]],
             ['label' => 'Аналитика', 'url' => ['/site/contact'],
             'items'=>[
@@ -106,8 +107,20 @@ AppAsset::register($this);
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
-</footer>
 
+</footer><?php
+Modal::begin([
+    'header'=>'<span id="modalHeaderTitle"></span>',
+    'headerOptions' => ['id' => 'modalHeader'],
+    'id' => 'modal',
+    'closeButton' => ['label'],
+    'size' => 'modal-lg',
+//keeps from closing modal with esc key or by clicking out of the modal.
+// user must click cancel or X to close
+'clientOptions' => ['backdrop' => 'static']
+]);
+echo "<div id='modalContent'></div>";
+Modal::end();?>
 <?php $this->endBody() ?>
 </body>
 </html>

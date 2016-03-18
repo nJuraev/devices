@@ -27,7 +27,8 @@ class SprOperator extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CodeOperator', 'Nazvanie'], 'string', 'max' => 20]
+            [['CodeOperator', 'Nazvanie'], 'string', 'max' => 20],
+            [['CodeOperator', 'Nazvanie'], 'required']
         ];
     }
 
@@ -38,8 +39,16 @@ class SprOperator extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'CodeOperator' => 'Code Operator',
-            'Nazvanie' => 'Nazvanie',
+            'CodeOperator' => 'Код оператора',
+            'Nazvanie' => 'Оператор',
         ];
+    }
+
+    function getProgrammists(){
+        return $this->hasMany(Programmists::className(),['Operator'=>'id']);
+    }
+
+    function getSprPurveyors(){
+        return $this->hasMany(SprPurveyors::className(),['Opertor'=>'id']);
     }
 }

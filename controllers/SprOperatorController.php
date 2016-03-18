@@ -6,33 +6,53 @@
  * Time: 10:08
  */
 namespace app\controllers;
+use app\models\SprOperator;
+use app\models\SprOperatorSearch;
 use Yii;
 use yii\web\Controller;
-use  app\models\SprOperator;
 
 
 class SprOperatorController extends Controller{
 
     public function actionAdmin(){
-        return $this->render('admin');
+        $searchModel = new SprOperatorSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('admin', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+        /*$dp=new ActiveDataProvider([
+           'query'=> SprOperator::find(),
+            'pagination'=>[
+                'pageSize'=>25
+            ]
+        ]);
+        return $this->render('admin',[
+            'dp'=>$dp
+        ]);*/
 
     }
 
-    public function create(){
-        $moper=new SprOperator();
+    public function actionCreate(){
+        $model=new SprOperator();
 
-        if($moper->load(Yii::$app->request->post()) && $moper->validate){
-            $form=Yii::$app->request->post('SprOperator');
-            $moper->CodeOperator=$form['CodeOperator'];
-            $moper->Nazvalie=$form['Nazvanie'];
-            if($moper->save()){
-                Yii::$app->getSession()->setFlash('success', 'Запись добавлена');
-                return Yii::$app->getResponse()->redirect('spr-operator/admin');
-            }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['admin']);
+        }elseif (Yii::$app->request->isAjax) {
+
+            return $this->renderAjax('create', [
+                'model' => $model
+            ]);
+        } else {
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
 
-        $this->render('create',[
-            'moper'=>$moper
-        ]);
+
     }
+
 }

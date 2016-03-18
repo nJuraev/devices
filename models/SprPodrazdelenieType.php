@@ -26,7 +26,8 @@ class SprPodrazdelenieType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Name'], 'string', 'max' => 100]
+            [['Name'], 'string', 'max' => 100],
+            [['Name'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -37,7 +38,7 @@ class SprPodrazdelenieType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Название',
         ];
     }
 }

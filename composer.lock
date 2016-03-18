@@ -4,9 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "479407875c975e7dbee0aefcb85e62d5",
-    "content-hash": "5c27dd23827e5c153817a7f3f5d227c6",
+    "hash": "0e6dbe67a770fe40132cf7b52cdf9473",
+    "content-hash": "55d2467ce31fa87a9ee30d357e184b50",
     "packages": [
+        {
+            "name": "alexeevdv/yii2-ip-validator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexeevdv/yii2-ip-validator.git",
+                "reference": "7a1bfe5e8ac05b6a50d8a8ea87c75b5c3f90f6b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexeevdv/yii2-ip-validator/zipball/7a1bfe5e8ac05b6a50d8a8ea87c75b5c3f90f6b0",
+                "reference": "7a1bfe5e8ac05b6a50d8a8ea87c75b5c3f90f6b0",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "yiisoft/yii2-codeception": "^2.0@dev"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "alexeevdv\\ip\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alexeevdv",
+                    "email": "mail@alexeevdv.ru",
+                    "homepage": "https://alexeevdv.ru/"
+                }
+            ],
+            "description": "Yii2 IP address validator",
+            "keywords": [
+                "IP",
+                "address",
+                "ipv4",
+                "ipv6",
+                "validator",
+                "yii2"
+            ],
+            "time": "2015-09-22 19:36:40"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.5",
@@ -915,7 +963,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "alexeevdv/yii2-ip-validator": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

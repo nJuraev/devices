@@ -26,7 +26,8 @@ class SprDevices extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['DeviceType'], 'string', 'max' => 30]
+            [['DeviceType'], 'string', 'max' => 30],
+            [['DeviceType'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -37,7 +38,16 @@ class SprDevices extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'DeviceType' => 'Device Type',
+            'DeviceType' => 'Тип устройства',
         ];
+    }
+
+    function getModelDevice()
+    {
+        return $this->hasMany(SprModelDevice::className(),['Device'=>'id']);
+    }
+
+    function getSprScripts(){
+        return $this->hasMany(SprScripts::className(),['DeviceType'=>'id']);
     }
 }

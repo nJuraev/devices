@@ -29,7 +29,7 @@ class DnsName extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Podrazdelenie'], 'required'],
+            [['IpAdress','Status','DnsName'], 'required','message'=>'Необходимо заполнить поле  "{attribute}"'],
             [['Podrazdelenie', 'Status'], 'integer'],
             [['DnsName'], 'string', 'max' => 30],
             [['IpAdress'], 'string', 'max' => 20]
@@ -43,10 +43,14 @@ class DnsName extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'DnsName' => 'Dns Name',
-            'IpAdress' => 'Ip Adress',
+            'DnsName' => 'DNS',
+            'IpAdress' => 'Ip Address',
             'Podrazdelenie' => 'Podrazdelenie',
-            'Status' => 'Status',
+            'Status' => 'Статус',
         ];
+    }
+
+    function getStatus(){
+        return $this->hasOne(SprStatus::className(),['id'=>'Status']);
     }
 }

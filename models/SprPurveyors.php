@@ -33,7 +33,8 @@ class SprPurveyors extends \yii\db\ActiveRecord
     {
         return [
             [['Operator'], 'integer'],
-            [['Purveyor', 'Site', 'Surname', 'Name', 'Patronymic', 'Tel'], 'string', 'max' => 20]
+            [['Purveyor', 'Site', 'Surname', 'Name', 'Patronymic', 'Tel'], 'string', 'max' => 20],
+            [['Purveyor', 'Site', 'Surname', 'Name', 'Patronymic', 'Tel'], 'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -44,13 +45,17 @@ class SprPurveyors extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Purveyor' => 'Purveyor',
-            'Site' => 'Site',
-            'Surname' => 'Surname',
-            'Name' => 'Name',
-            'Patronymic' => 'Patronymic',
-            'Operator' => 'Operator',
-            'Tel' => 'Tel',
+            'Purveyor' => 'Поставщик',
+            'Site' => 'Сайт',
+            'Surname' => 'Фамилия',
+            'Name' => 'Имя',
+            'Patronymic' => 'Отчество',
+            'Operator' => 'Оператор',
+            'Tel' => 'Телефон',
         ];
+    }
+
+    public function getOperator(){
+        return $this->hasOne(SprOperator::className(),['id'=>'Operator']);
     }
 }

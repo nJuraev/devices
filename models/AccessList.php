@@ -30,8 +30,9 @@ class AccessList extends \yii\db\ActiveRecord
     {
         return [
             [['Group', 'Status'], 'integer'],
-            [['IP'], 'string', 'max' => 20],
-            [['Description'], 'string', 'max' => 100]
+            //[['IP'], 'ip','message'=>'Неправильный адрес IP'],
+            [['Description'], 'string', 'max' => 100],
+            [['Group','Status','IP','Description'], 'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -42,10 +43,18 @@ class AccessList extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'IP' => 'Ip',
-            'Description' => 'Description',
-            'Group' => 'Group',
-            'Status' => 'Status',
+            'IP' => 'IP',
+            'Description' => 'Описание',
+            'Group' => 'Группа',
+            'Status' => 'Статус',
         ];
+    }
+
+    function getIpGroup(){
+        return $this->hasOne(SprIpGroup::className(),['id'=>'Group']);
+    }
+
+    function getStatus(){
+        return $this->hasOne(SprStatus::className(),['id'=>'Status']);
     }
 }

@@ -26,7 +26,8 @@ class SprOs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Os'], 'string', 'max' => 40]
+            [['Os'], 'string', 'max' => 40],
+            [['Os'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -37,7 +38,7 @@ class SprOs extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Os' => 'Os',
+            'Os' => 'ОС',
         ];
     }
 }

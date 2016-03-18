@@ -27,7 +27,7 @@ class SprScripts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ScriptIdentification'], 'required'],
+            [['ScriptIdentification','DeviceType','ManageScript'], 'required'],
             [['ScriptIdentification'], 'integer'],
             [['Description'], 'string', 'max' => 100]
         ];
@@ -40,8 +40,15 @@ class SprScripts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ScriptIdentification' => 'Script Identification',
-            'Description' => 'Description',
+            'ScriptIdentification' => 'ID Скрипт',
+            'Description' => 'Описание',
+            'DeviceType'=>'Тип устройства',
+            'ManageScript'=>'Скрипт'
         ];
+    }
+
+    function getSprDevices()
+    {
+        return $this->hasOne(SprDevices::className(),['id'=>'DeviceType']);
     }
 }

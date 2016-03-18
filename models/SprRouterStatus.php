@@ -26,7 +26,8 @@ class SprRouterStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['RouterStatus'], 'string', 'max' => 25]
+            [['RouterStatus'], 'string', 'max' => 25],
+            [['RouterStatus'], 'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -37,7 +38,7 @@ class SprRouterStatus extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'RouterStatus' => 'Router Status',
+            'RouterStatus' => 'Статус роутера',
         ];
     }
 }

@@ -30,7 +30,8 @@ class SprIpGroup extends \yii\db\ActiveRecord
         return [
             [['Status'], 'integer'],
             [['Name'], 'string', 'max' => 20],
-            [['Description'], 'string', 'max' => 30]
+            [['Description'], 'string', 'max' => 30],
+            [['Name','Description','Status'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -41,9 +42,18 @@ class SprIpGroup extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Name' => 'Name',
-            'Description' => 'Description',
-            'Status' => 'Status',
+            'Name' => 'Название',
+            'Description' => 'Описание',
+            'Status' => 'Статус',
         ];
+    }
+
+    function getStatus(){
+        return $this->hasOne(SprStatus::className(),['id'=>'Status']);
+    }
+
+    function getAccessList(){
+        return $this->hasMany(AccessList::className(),['Group'=>'id']);
+
     }
 }

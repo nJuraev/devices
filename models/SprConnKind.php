@@ -37,7 +37,11 @@ class SprConnKind extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Kind' => 'Kind',
+            'Kind' => 'Тип соединения',
         ];
+    }
+
+    function getConnectionType(){
+        return $this->hasMany(SprConnectionsType::className(),['Kind'=>'id']);
     }
 }

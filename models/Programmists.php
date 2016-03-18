@@ -55,12 +55,14 @@ class Programmists extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['Operator', 'CommentAccess'], 'integer'],
+            [['Operator', 'CommentAccess','Tel'], 'integer','message'=>'{attribute} должен состоять только из цифр'],
             [['Password', 'Status'], 'string'],
             [['Surname', 'Name', 'Patronymic'], 'string', 'max' => 40],
             [['Tel'], 'string', 'max' => 10],
             [['Email'], 'string', 'max' => 25],
-            [['Login'], 'string', 'max' => 20]
+            [['Email'], 'email','message'=>'Неправильный адрес {attribute}'],
+            [['Login'], 'string', 'max' => 20],
+            [['Login','Surname','Name','Password','Email','Operator'],'required', 'message'=>'Необходимо заполнить поле "{attribute}" ']
         ];
     }
 
@@ -71,15 +73,15 @@ class Programmists extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'Surname' => 'Surname',
-            'Name' => 'Name',
-            'Patronymic' => 'Patronymic',
-            'Operator' => 'Operator',
-            'Tel' => 'Tel',
-            'Email' => 'Email',
-            'Login' => 'Login',
-            'Password' => 'Password',
-            'Status' => 'Status',
+            'Surname' => 'Фамилия',
+            'Name' => 'Имя',
+            'Patronymic' => 'Отчество',
+            'Operator' => 'Оператор',
+            'Tel' => 'Телефон',
+            'Email' => 'E-mail',
+            'Login' => 'Логин',
+            'Password' => 'Пароль',
+            'Status' => 'Статус',
             'CommentAccess' => 'Comment Access',
         ];
     }
@@ -121,4 +123,24 @@ class Programmists extends \yii\db\ActiveRecord implements IdentityInterface
     {
         //return $this->authKey === $authKey;
     }
+
+    function beforeSave($insert)
+    {
+
+        if( parent::beforeSave($insert)){
+            $this->setPassword($this->Password);
+            return true;
+        }
+    }
+    public  function getCodeTel()
+    {
+        return $this->CodeOperator . ' ' . $this->Tel;
+    }
+
+    function getOperator(){
+        return $this->hasOne(SprOperator::className(),['id'=>'Operator']);
+    }
+
+
+
 }

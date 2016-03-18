@@ -28,7 +28,8 @@ class SprScriptStatus extends \yii\db\ActiveRecord
     {
         return [
             [['StatusId'], 'integer'],
-            [['ScriptStatus'], 'string', 'max' => 20]
+            [['ScriptStatus'], 'string', 'max' => 20],
+            [['StatusId','ScriptStatus'],'required', 'message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 

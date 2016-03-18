@@ -28,7 +28,8 @@ class SprModelDevice extends \yii\db\ActiveRecord
     {
         return [
             [['Device'], 'integer'],
-            [['Model'], 'string', 'max' => 50]
+            [['Model'], 'string', 'max' => 50],
+            [['Model','Device'],'required','message'=>'Необходимо заполнить поле "{attribute}"']
         ];
     }
 
@@ -39,8 +40,13 @@ class SprModelDevice extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Model' => 'Model',
-            'Device' => 'Device',
+            'Model' => 'Модель',
+            'Device' => 'Устройства',
         ];
+    }
+
+    function getSprDevices()
+    {
+        return $this->hasOne(SprDevices::className(),['id'=>'Device']);
     }
 }

@@ -27,7 +27,7 @@ class SprConnectionsType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Kind'], 'required'],
+            [['Kind','Connection'], 'required','message'=>'Необходимо заполнить поле {attribute}'],
             [['Kind'], 'integer'],
             [['Connection'], 'string', 'max' => 50]
         ];
@@ -40,8 +40,12 @@ class SprConnectionsType extends \yii\db\ActiveRecord
     {
         return [
             'id_conn' => 'Id Conn',
-            'Connection' => 'Connection',
-            'Kind' => 'Kind',
+            'Connection' => 'Подключение',
+            'Kind' => 'Тип',
         ];
+    }
+
+    function getConnKind(){
+        return $this->hasOne(SprConnKind::className(),['id'=>'Kind']);
     }
 }

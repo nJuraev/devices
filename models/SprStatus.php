@@ -26,7 +26,9 @@ class SprStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['StatusName'], 'string', 'max' => 20]
+            [['ScriptStatus'], 'string', 'max' => 20],
+            [['ScriptStatus','ScriptId'],'required', 'message'=>'Необходимо заполнить поле "{attribute}"']
+
         ];
     }
 
@@ -37,7 +39,20 @@ class SprStatus extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'StatusName' => 'Status Name',
+            'ScriptStatus' => 'Название',
+            'ScriptId'=>'ID-скрипт'
         ];
+    }
+    function getIpGroup(){
+        return $this->hasMany(SprIpGroup::className(),['Status'=>'id']);
+    }
+
+    function getAccessList(){
+        return $this->hasMany(AccessList::className(),['Status'=>'id']);
+
+    }
+
+    function getDns(){
+        return $this->hasMany(DnsName::className(),['Status'=>'id']);
     }
 }
