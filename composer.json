@@ -18,7 +18,8 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "alexeevdv/yii2-ip-validator": "dev-master"
+        "alexeevdv/yii2-ip-validator": "dev-master",
+        "fedemotta/yii2-widget-datatables": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

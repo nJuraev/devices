@@ -16,6 +16,7 @@ use yii\web\Controller;
 class ProgrammistsController extends Controller{
 
     function actionAdmin(){
+        $this->layout='niceadmin';
         $searchModel=new ProgrammistsSearch();
         $dataProvider=$searchModel->search(Yii::$app->request->queryParams);
         return $this->render('admin',[

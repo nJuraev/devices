@@ -5,7 +5,7 @@
  * Date: 18.02.2016
  * Time: 8:43
  */
-use yii\grid\GridView;
+use fedemotta\datatables\DataTables;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -15,9 +15,17 @@ use yii\helpers\Url;
 <div class="col-xs-8">
 <?php
 
-echo GridView::widget([
+echo DataTables::widget([
     'dataProvider'=>$dataProvider,
     'filterModel'=>$searchModel,
+    'clientOptions' => [
+        "lengthMenu"=> [[ 25, 50,-1], [ 25, 50, "All"] ],
+        "info"=>false,
+        "responsive"=>[
+            'details'=>true
+        ],
+
+    ],
     'columns'=>[
         ['class'=> 'yii\grid\SerialColumn'],
         'Surname',

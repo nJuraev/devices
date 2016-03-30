@@ -30,12 +30,12 @@ class PodrazdelenieController extends Controller
      * Lists all Podrazdelenie models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionAdmin()
     {
         $searchModel = new PodrazdelenieSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('admin', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
